@@ -1,0 +1,103 @@
+--- PÁGINA 1 ---
+
+Página 1
+ Base de Conhecimento — Bem-estar Digital
+ Documento sintético para testar extração, segmentação e validação de FAQ em um pipeline RAG
+ local.
+IMPORTANTE: Este documento foi criado exclusivamente para testes técnicos. O conteúdo é ilustrativo e não
+deve ser tratado como orientação científica ou médica. Todas as referências bibliográficas abaixo são fictícias e
+servem apenas para testar o formato dos registros.
+Formato padronizado de cada registro: ID, PERGUNTA, RESPOSTA e REFERÊNCIA BIBLIOGRÁFICA. Os
+marcadores foram mantidos literalmente para facilitar a segmentação automática.
+ID: FAQ-001
+PERGUNTA: Como posso perceber se o uso do celular está atrapalhando minha rotina?
+RESPOSTA: Uma forma inicial de observar o próprio uso é verificar se ele interfere em atividades
+importantes, como estudar, trabalhar, dormir, praticar exercícios ou conversar com outras pessoas.
+Durante alguns dias, registre em quais momentos você pega o celular, o que pretendia fazer e se acabou
+permanecendo nele por mais tempo do que planejava. Esse registro pode ajudar a identificar padrões,
+mas não é, por si só, uma avaliação clínica.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Centro Demonstrativo
+de Bem-estar Digital. Guia ilustrativo de auto-observação do uso de dispositivos. Edição de teste, 2025.
+FIM DO REGISTRO
+ID: FAQ-002
+PERGUNTA: Que estratégias simples posso experimentar para reduzir distrações digitais durante o
+estudo?
+RESPOSTA: Você pode experimentar estudar com notificações não essenciais desativadas, deixar o
+celular fora do alcance imediato e definir previamente qual tarefa pretende concluir. Outra opção é
+reservar momentos específicos para consultar mensagens, em vez de alternar continuamente entre o
+estudo e os aplicativos. Teste uma mudança por vez e observe se ela ajuda na sua rotina; estratégias
+diferentes podem funcionar melhor para pessoas e contextos diferentes.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Laboratório Modelo de
+Hábitos Digitais. Estratégias ilustrativas para organização do estudo. Documento fictício, 2024.
+FIM DO REGISTRO
+ID: FAQ-003
+PERGUNTA: Como posso organizar pausas quando passo muito tempo diante de uma tela?
+RESPOSTA: Uma possibilidade é planejar pausas curtas entre blocos de trabalho ou estudo e usar esse
+intervalo para levantar, alongar-se ou olhar para longe da tela. Você pode escolher um intervalo
+compatível com a atividade e ajustar o plano conforme perceber cansaço ou perda de concentração. Este
+exemplo não estabelece uma frequência universal nem substitui orientações profissionais específicas
+para necessidades individuais.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Instituto Simulado de
+Rotinas Saudáveis. Pausas e organização de atividades com tela. Série de exemplos, 2025.
+FIM DO REGISTRO
+ID: FAQ-004
+PERGUNTA: O que posso fazer para evitar que notificações interrompam tarefas importantes?
+
+--- PÁGINA 2 ---
+
+Página 2
+RESPOSTA: Antes de iniciar uma tarefa, identifique quais notificações realmente precisam ser recebidas
+naquele momento. Quando for adequado, ative um modo de foco, silencie alertas não urgentes ou
+mantenha abertos apenas os aplicativos necessários. Combine essa estratégia com horários definidos
+para verificar mensagens. Se você depende de contatos urgentes por estudo, trabalho ou cuidado de
+outras pessoas, configure exceções em vez de bloquear tudo indiscriminadamente.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Núcleo Experimental de
+Atenção e Tecnologia. Configurações de notificações: material didático fictício. 2025.
+FIM DO REGISTRO
+ID: FAQ-005
+PERGUNTA: Como posso estabelecer limites entre o tempo de trabalho e o tempo pessoal quando uso o
+mesmo computador?
+RESPOSTA: Pode ajudar criar sinais claros para o início e o fim do período de trabalho, como uma lista de
+prioridades no começo do dia e um pequeno ritual de encerramento. Sempre que possível, separe perfis,
+janelas ou espaços de trabalho dos que você usa para lazer. Defina também um horário realista para
+encerrar as atividades e anote tarefas pendentes para retomá-las depois, em vez de manter tudo aberto
+sem um plano.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Observatório Fictício
+de Trabalho e Vida Digital. Organização de fronteiras entre atividades. Relatório demonstrativo, 2024.
+FIM DO REGISTRO
+ID: FAQ-006
+PERGUNTA: Como posso conversar com familiares sobre regras de uso de telas em casa?
+RESPOSTA: Tente iniciar a conversa com exemplos concretos de situações que gostariam de melhorar,
+em vez de atribuir culpa a uma pessoa. Cada participante pode explicar suas necessidades e sugerir
+acordos, como momentos sem dispositivos durante refeições ou períodos dedicados a atividades em
+conjunto. Reavaliem os combinados depois de algum tempo e considerem idade, acessibilidade, estudo,
+trabalho e outras necessidades antes de aplicar uma regra igual para todos.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Fórum Simulado de
+Convivência Digital. Conversas e acordos familiares: exemplo para testes de software. 2025.
+FIM DO REGISTRO
+ID: FAQ-007
+PERGUNTA: O que o agente deve responder quando a base de conhecimento não contém informação
+suficiente para uma pergunta?
+RESPOSTA: Neste projeto, o comportamento esperado é reconhecer a insuficiência de evidências e não
+inventar uma resposta. O agente pode informar que não encontrou conteúdo relevante e suficiente na
+base consultada e, se apropriado, pedir que a pessoa reformule a pergunta ou consulte uma fonte
+qualificada. A resposta gerada deve se apoiar nos trechos recuperados, e a referência só deve ser
+apresentada quando estiver associada ao conteúdo efetivamente utilizado.
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Especificação
+demonstrativa do agente de bem-estar digital. Requisito de comportamento do protótipo, versão 1.0.
+FIM DO REGISTRO
+ID: FAQ-008
+PERGUNTA: Por que cada resposta precisa manter sua referência bibliográfica associada?
+RESPOSTA: Manter a referência no mesmo registro da pergunta e da resposta facilita rastrear a origem do
+conteúdo recuperado. Isso permite que o sistema apresente a fonte relacionada ao trecho utilizado, ajuda
+a revisar a qualidade da base e reduz o risco de associar uma resposta a uma referência incorreta durante
+a segmentação. Em uma base real, os dados bibliográficos devem ser verificados antes de serem usados
+como evidência.
+
+--- PÁGINA 3 ---
+
+Página 3
+REFERÊNCIA BIBLIOGRÁFICA: REFERÊNCIA FICTÍCIA — APENAS PARA TESTE. Manual modelo de
+curadoria de dados para sistemas RAG. Documento técnico sintético, 2025.
+FIM DO REGISTRO
+
