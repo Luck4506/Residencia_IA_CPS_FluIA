@@ -1,0 +1,7 @@
+# Recursos de bem-estar digital no Android
+
+## Informações de uso
+A documentação do Google descreve relatórios de tempo de uso dos aplicativos, frequência de abertura e notificações recebidas. Essas informações permitem observar padrões de uso no próprio aparelho.
+
+## Temporizadores e modo de foco
+Em aparelhos compatíveis, é possível definir temporizadores para aplicativos. O modo de foco pode pausar aplicativos escolhidos e impedir suas notificações enquanto estiver ativado. Os menus e recursos variam conforme o dispositivo. Trata-se de documentação de funcionalidades, não de um estudo que comprove ganhos de aprendizagem.

@@ -1,0 +1,7 @@
+# Foco e notificações no Windows
+
+## Não perturbe
+A documentação da Microsoft descreve a opção Não perturbe para controlar notificações. É possível definir exceções prioritárias e ajustar quais aplicativos podem enviar alertas. Notificações silenciadas podem continuar disponíveis na central de notificações.
+
+## Sessões de foco
+Em versões compatíveis, é possível iniciar uma sessão de foco nas configurações do sistema e ajustar a duração. Há opções relacionadas ao temporizador, aos avisos da barra de tarefas e ao Não perturbe. Os passos variam conforme a versão do Windows. Essa documentação não demonstra que um intervalo específico seja o tempo ideal de estudo.

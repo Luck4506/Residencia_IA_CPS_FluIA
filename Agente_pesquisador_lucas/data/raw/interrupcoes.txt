@@ -1,0 +1,9 @@
+# Interrupções durante tarefas
+Autoria: Gloria Mark, Daniela Gudith e Ulrich Klocke
+Ano: 2008
+Fonte: https://www.ics.uci.edu/~gmark/chi08-mark.pdf
+Localização original: página 1, Abstract
+Acesso: 2026-10-28
+
+Síntese didática em português, sem reprodução integral do artigo:
+No estudo, participantes concluíram tarefas interrompidas mais rapidamente, sem diferença de qualidade, mas relataram mais estresse, frustração, pressão de tempo e esforço. O resultado não permite afirmar que toda interrupção reduz a velocidade. Reservar períodos com menos interrupções é uma aplicação prática inferida, não uma duração ideal de estudo demonstrada pelo artigo.
