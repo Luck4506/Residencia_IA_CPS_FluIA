@@ -1,6 +1,8 @@
 {
   "objetivo": "Estudar Python",
-  "limite_distracao": 30,
+  "inicio": "2026-10-29T14:00:00-03:00",
+  "fim": "2026-10-29T16:35:00-03:00",
+  "limite_distracao": 15,
   "apps_de_foco": [
     "Docs"
   ]

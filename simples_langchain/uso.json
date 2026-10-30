@@ -1,5 +1,9 @@
 {
-  "Docs": 20,
-  "Instagram": 10,
-  "YouTube": 3
+  "inicio": "2026-10-29T14:00:00-03:00",
+  "atualizado_em": "2026-10-29T14:35:00-03:00",
+  "minutos_por_app": {
+    "Docs": 20,
+    "Instagram": 1,
+    "YouTube": 1
+  }
 }

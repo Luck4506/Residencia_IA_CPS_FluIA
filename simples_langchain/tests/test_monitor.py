@@ -12,10 +12,16 @@ import pytest
 ROOT = Path(__file__).resolve().parents[1]
 sys.path.insert(0, str(ROOT))
 from agente import ler_uso
-from monitor import MonitorFoco
+from monitor import COR_DENTRO, COR_ERRO, COR_FORA, COR_ROTULO, RESET, MonitorFoco, formatar_evento
 
 
 def escrever(caminho, dados):
+    if caminho.name == 'configuracao.json':
+        dados = {'inicio': '2026-10-29T14:00:00-03:00',
+                 'fim': '2026-10-29T15:00:00-03:00', **dados}
+    elif 'minutos_por_app' not in dados:
+        dados = {'inicio': '2026-10-29T14:00:00-03:00',
+                 'atualizado_em': '2026-10-29T14:40:00-03:00', 'minutos_por_app': dados}
     caminho.write_text(json.dumps(dados), encoding='utf-8')
 
 
@@ -41,7 +47,7 @@ def test_edicao_no_disco_dispara_sem_acumular_ou_escrever(arquivos):
     alertas = [e for e in eventos if e['tipo'] == 'alerta']
     assert len(alertas) == 1
     assert alertas[0]['minutos_distraidos'] == 18
-    assert eventos[-1]['uso_lido']['YouTube'] == 8
+    assert eventos[-1]['uso_lido']['minutos_por_app']['YouTube'] == 8
     assert (config.read_bytes(), uso.read_bytes()) == antes
 
 
@@ -89,6 +95,35 @@ def test_falha_temporaria_nao_rearma_alerta(arquivos):
     assert len([e for e in eventos if e['tipo'] == 'alerta']) == 1
 
 
+def test_formato_verboso_e_o_json_completo():
+    evento = {"tipo": "leitura", "horario": "2026-10-29T19:06:14-03:00", "ultrapassou": False}
+    assert formatar_evento(evento) == json.dumps(evento, ensure_ascii=False)
+
+
+def test_formato_conciso_mostra_o_estado_com_contraste():
+    horario = "2026-10-29T19:06:14-03:00"
+    dentro = {"tipo": "leitura", "horario": horario, "ultrapassou": False}
+    fora = {"tipo": "leitura", "horario": horario, "ultrapassou": True}
+    alerta = {"tipo": "alerta", "horario": horario, "ultrapassou": True}
+    erro = {"tipo": "erro_leitura", "horario": horario, "mensagem": "JSON inválido"}
+
+    assert formatar_evento(dentro, "conciso") == f"{{ {horario} | ultrapassou: false }}"
+    assert formatar_evento(fora, "conciso") == f"{{ {horario} | ultrapassou: true }}"
+    assert formatar_evento(alerta, "conciso") is None
+    assert formatar_evento(erro, "conciso") == f"{{ {horario} | ultrapassou: erro }}"
+
+    rotulo = f"{COR_ROTULO} ultrapassou {RESET}"
+    assert formatar_evento(dentro, "conciso", colorir=True) == (
+        f"{{ {horario} | {rotulo}: {COR_DENTRO} false {RESET} }}"
+    )
+    assert formatar_evento(fora, "conciso", colorir=True) == (
+        f"{{ {horario} | {rotulo}: {COR_FORA} true {RESET} }}"
+    )
+    assert formatar_evento(erro, "conciso", colorir=True) == (
+        f"{{ {horario} | {rotulo}: {COR_ERRO} erro {RESET} }}"
+    )
+
+
 def test_processo_rodando_observa_edicoes_e_se_recupera(arquivos):
     config, uso = arquivos
     processo = subprocess.Popen(
@@ -128,7 +163,7 @@ def test_processo_rodando_observa_edicoes_e_se_recupera(arquivos):
         dados['limite_distracao'] = 30
         escrever(config, dados)
         aguardar('leitura', minutos_distraidos=18, ultrapassou=False)
-        assert json.loads(uso.read_text())['YouTube'] == 8
+        assert json.loads(uso.read_text())['minutos_por_app']['YouTube'] == 8
     finally:
         processo.send_signal(signal.SIGINT)
         try:

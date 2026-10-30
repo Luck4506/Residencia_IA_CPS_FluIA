@@ -19,9 +19,10 @@ def arquivo(tmp_path, monkeypatch):
     caminho = tmp_path / 'configuracao.json'
     monkeypatch.setattr(agente, 'ARQUIVO_CONFIGURACAO', caminho)
     uso = tmp_path / 'uso.json'
-    uso.write_text(json.dumps({'Docs': 20, 'Instagram': 10, 'YouTube': 10}))
+    uso.write_text(json.dumps({'inicio': '2026-10-29T14:00:00-03:00', 'atualizado_em': '2026-10-29T14:40:00-03:00', 'minutos_por_app': {'Docs': 20, 'Instagram': 10, 'YouTube': 10}}))
     monkeypatch.setattr(agente, 'ARQUIVO_USO', uso)
     agente.salvar_configuracao({
+        'inicio': '2026-10-29T14:00:00-03:00', 'fim': '2026-10-29T15:00:00-03:00',
         'objetivo': 'Estudar Python', 'limite_distracao': 15, 'apps_de_foco': ['Docs'],
     })
     return caminho
@@ -32,7 +33,7 @@ def test_mudanca_parcial_preserva_campos_e_altera_avaliacao(arquivo):
     agente.atualizar_configuracao.invoke({'limite_distracao': 25})
     assert agente.verificar_foco.invoke({})['ultrapassou'] is False
     resultado = agente.atualizar_configuracao.invoke({'apps_de_foco': []})
-    assert resultado == {'objetivo': 'Estudar Python', 'limite_distracao': 25, 'apps_de_foco': []}
+    assert resultado == {'inicio': '2026-10-29T14:00:00-03:00', 'fim': '2026-10-29T15:00:00-03:00', 'objetivo': 'Estudar Python', 'limite_distracao': 25, 'apps_de_foco': []}
     assert agente.verificar_foco.invoke({})['minutos_distraidos'] == 40
 
 
@@ -104,3 +105,40 @@ def test_atualizacao_e_consulta_na_mesma_rodada(arquivo, monkeypatch):
                   if isinstance(m, ToolMessage) and m.name == 'verificar_foco']
     assert resultados[0]['limite_distracao'] == 30
     assert resultados[0]['ultrapassou'] is False
+
+
+def test_adicionar_app_preserva_configuracao_e_nao_duplica(arquivo):
+    antes = agente.ler_configuracao()
+    assert agente.verificar_foco.invoke({})['minutos_distraidos'] == 20
+    resultado = agente.adicionar_app_de_foco.invoke({'app': 'YouTube'})
+    assert resultado == antes | {'apps_de_foco': ['Docs', 'YouTube']}
+    assert agente.verificar_foco.invoke({})['minutos_distraidos'] == 10
+    agente.adicionar_app_de_foco.invoke({'app': ' YouTube '})
+    assert agente.ler_configuracao() == resultado
+
+
+def test_adicionar_app_vazio_nao_altera_configuracao(arquivo):
+    antes = arquivo.read_bytes()
+    with pytest.raises(ValidationError):
+        agente.adicionar_app_de_foco.invoke({'app': '   '})
+    assert arquivo.read_bytes() == antes
+
+
+@pytest.mark.parametrize('nome', ['youtube', 'YOUTUBE', ' YouTube '])
+def test_excecao_ignora_maiusculas_no_calculo(arquivo, nome):
+    agente.adicionar_app_de_foco.invoke({'app': nome})
+    resultado = agente.verificar_foco.invoke({})
+    assert resultado['minutos_distraidos'] == 10
+    assert resultado['ultrapassou'] is False
+    agente.adicionar_app_de_foco.invoke({'app': 'YouTube'})
+    assert agente.ler_configuracao()['apps_de_foco'] == ['Docs', nome.strip()]
+
+
+def test_lista_editada_no_disco_aceita_variantes_sem_reescrever(arquivo):
+    dados = json.loads(arquivo.read_text())
+    dados['apps_de_foco'] = ['Docs', 'youtube', 'YOUTUBE']
+    arquivo.write_text(json.dumps(dados))
+    antes = arquivo.read_bytes()
+    assert agente.ler_configuracao()['apps_de_foco'] == ['Docs', 'youtube']
+    assert agente.verificar_foco.invoke({})['minutos_distraidos'] == 10
+    assert arquivo.read_bytes() == antes
