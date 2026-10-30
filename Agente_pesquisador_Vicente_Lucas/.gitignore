@@ -1,0 +1,7 @@
+.venv/
+.cache/
+__pycache__/
+data/processed/*
+!data/processed/.gitkeep
+data/chromadb/*
+!data/chromadb/.gitkeep

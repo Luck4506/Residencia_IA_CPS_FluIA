@@ -1,0 +1,35 @@
+# Credenciais e configurações locais
+.env
+.env.*
+!.env.example
+
+# Python e ambientes virtuais
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.coverage
+htmlcov/
+build/
+dist/
+*.egg-info/
+
+# Notebooks e sistema operacional
+.ipynb_checkpoints/
+.DS_Store
+
+# Logs
+*.log
+
+# Pipeline conforme o roteiro RAG
+.cache/
+data/processed/*
+!data/processed/.gitkeep
+data/chroma/*
+!data/chroma/.gitkeep
+evaluation/results/
+
+data/demo/

@@ -1,0 +1,7 @@
+# Tempo de Uso no Mac
+
+## Relatórios de atividade
+A Apple descreve o Tempo de Uso como um recurso para acompanhar aplicativos e sites, notificações recebidas e uso dos dispositivos. Os relatórios ajudam a observar a atividade registrada.
+
+## Limites e horários
+O recurso permite definir limites para aplicativos e horários de disponibilidade. A configuração é feita nos Ajustes do Sistema, em Tempo de Uso. Algumas funções dependem da versão do sistema e da configuração da conta. As informações descrevem recursos do produto, sem comprovar uma duração ideal de uso ou melhoria universal no desempenho escolar.
