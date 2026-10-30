@@ -116,8 +116,8 @@ flowchart TB
   externo -->|"alerta com --notificar"| notificacao
   notificacao -->|"solicita entrega"| mac
 
-  style conversa fill:none,stroke:#000000,stroke-width:1px,color:#ffffff,filter:none
-  style separado fill:none,stroke:#000000,stroke-width:1px,color:#ffffff,filter:none
+  style conversa fill:none,stroke:#808080,stroke-width:1px,filter:none
+  style separado fill:none,stroke:#808080,stroke-width:1px,filter:none
 
   classDef agente fill:#ede9fe,stroke:#6d28d9,color:#211047
   classDef ferramenta fill:#dcfce7,stroke:#15803d,color:#12351f
