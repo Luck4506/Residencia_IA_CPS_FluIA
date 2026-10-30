@@ -1,95 +1,138 @@
 # Agente de foco
 
-Agente local que acompanha um plano de foco salvo em JSON. Há dois programas:
+Protótipo local com LangChain e Ollama para configurar um objetivo de foco, acompanhar o uso de apps e avisar quando a distração ultrapassa o limite. Os dados de uso são mockados em JSON; ainda não há coleta do celular. Não precisa de chave de API.
 
-- `python agente.py` abre o chat com Ollama, permite alterar a configuração e monitora os arquivos para enviar avisos espontâneos.
-- `python monitor.py` relê os arquivos e avisa no terminal quando o uso fora do foco passa do limite. Funciona sem chat e sem Ollama.
+## Setup
 
-Os minutos em `uso.json` são mockados e pertencem ao período informado no próprio arquivo. A sessão planejada tem início e fim em `configuracao.json`. Este projeto não coleta o uso real do celular.
-
-## Fluxo
-
-O comando `python agente.py` abre a interface em `chat.py`. O agente LangChain
-interpreta as mensagens com o Ollama e executa ferramentas para consultar o foco
-ou alterar a configuração. As ferramentas `atualizar_configuracao` e
-`adicionar_app_de_foco` gravam `configuracao.json`; nenhuma grava `uso.json`.
-
-O cálculo é compartilhado: `avaliar_foco` soma os minutos dos apps fora das
-exceções e considera excesso quando a soma é **maior** que o limite. Igualar o
-limite ainda não gera alerta. O modelo não decide essa comparação.
-
-```mermaid
-flowchart TB
-  usuario["Usuário"] <-->|"mensagens e respostas"| chat["chat.py — iniciado por agente.py"]
-  chat <-->|"conversa"| agente["Agente LangChain + Ollama"]
-  agente -->|"chama"| consultar["consultar_configuracao"]
-  agente -->|"chama"| alterar["atualizar_configuracao / adicionar_app_de_foco"]
-  agente -->|"chama"| verificar["verificar_foco"]
-  consultar -->|"lê"| config["configuracao.json"]
-  alterar -->|"lê e grava"| config
-  verificar -->|"lê"| config
-  verificar -->|"lê"| uso["uso.json — mock"]
-  verificar --> avaliar["avaliar_foco — cálculo sem LLM"]
-
-  chat -->|"inicia em outra thread"| interno["MonitorFoco do chat — a cada 1 s"]
-  cli["monitor.py — processo separado"] --> externo["MonitorFoco externo — padrão 5 s"]
-  interno -->|"lê"| config
-  interno -->|"lê"| uso
-  externo -->|"lê"| config
-  externo -->|"lê"| uso
-  interno --> avaliar
-  externo --> avaliar
-  interno -->|"alerta sem LLM; incluído no histórico"| chat
-  externo -->|"leituras, alertas e erros"| terminal["Terminal"]
-  externo -->|"alerta com --notificar"| notificacao["notificacoes.py — worker separado"]
-  notificacao <-->|"sugestão opcional, sem ferramentas"| modelo["Ollama"]
-  notificacao -->|"fatos calculados + sugestão ou texto padrão"| mac["Notificação do macOS"]
-```
-
-As setas mostram chamadas, leituras e entregas; os retornos das ferramentas ao
-agente foram omitidos para simplificar. O chat mantém a conversa apenas em memória.
-Cada monitor tem seu próprio controle de alertas: os dois processos compartilham
-os JSON, mas não o histórico nem o estado de entrega. O aviso no chat usa texto
-fixo; somente a sugestão da notificação nativa pode ser escrita pelo modelo.
-
-## Requisitos
-
-- Python 3.11 ou superior
-- [Ollama](https://ollama.com) em execução, para o chat e para sugestões nas notificações (opcionais)
-- O modelo `qwen2.5:3b` para as funcionalidades que usam Ollama
-- macOS para notificações nativas; chat e saída no terminal também podem ser usados no Windows/Linux
-
-Não é necessária chave de API. O monitor no terminal e a notificação com
-`--sem-ia` não precisam do serviço Ollama em execução.
-
-## Instalação
-
-Na pasta `simples_langchain`, para criar um ambiente novo:
+Requisitos: Python 3.11 ou superior e [Ollama](https://ollama.com). Na pasta `simples_langchain`, crie e ative um ambiente:
 
 ```bash
 python3 -m venv .venv
 source .venv/bin/activate
-pip install "langchain>=1.0,<2" "langchain-ollama>=1.0,<2" "pydantic>=2.7,<3" "pytest>=8,<10" "prompt-toolkit>=3.0,<4"
+```
+
+No Windows (PowerShell), use `python -m venv .venv` e `.venv\Scripts\Activate.ps1`. Se já usa o ambiente da pasta pai, basta ativá-lo com `source ../.venv/bin/activate` no macOS/Linux.
+
+Instale as dependências e baixe o modelo:
+
+```bash
+pip install "langchain>=1.0,<2" "langchain-ollama>=1.0,<2" "pydantic>=2.7,<3" "prompt-toolkit>=3.0,<4" "pytest>=8,<10"
 ollama pull qwen2.5:3b
 ```
 
-No Windows (PowerShell), crie o ambiente com `python -m venv .venv` e ative
-com `.venv\Scripts\Activate.ps1`.
+Essa é a lista de dependências deste protótipo; o `requirements.txt` da pasta pai não a substitui. Mantenha o Ollama em execução para conversar com o agente. A conexão local usa `http://127.0.0.1:11434`.
 
-Se já usa o ambiente da pasta pai `langchain/.venv`, pode reutilizá-lo com
-`source ../.venv/bin/activate` no macOS/Linux, sem criar outro. Os comandos
-seguintes pressupõem um ambiente ativado e a pasta `simples_langchain` como
-pasta de trabalho. A lista de instalação acima é a deste protótipo; o
-`requirements.txt` da pasta pai não contém essas dependências.
+## Como usar
 
-Deixe o Ollama aberto antes de iniciar o chat. O agente usa `http://127.0.0.1:11434`.
+Execute os comandos abaixo em `simples_langchain`, com o ambiente ativado.
 
-## Arquivos de configuração e períodos
+### Chat e avisos automáticos
 
-Os exemplos abaixo são ilustrativos; os arquivos locais podem conter valores
-diferentes após os testes no chat.
+```bash
+python agente.py
+```
 
-`configuracao.json` guarda o plano:
+Exemplos de pedidos:
+
+- “Como está meu foco?”
+- “Mude meu limite para 15 minutos.”
+- “Adicione YouTube aos apps permitidos.”
+
+O chat também relê os JSON em ciclos com intervalo de 1 segundo e mostra um aviso espontâneo quando há excesso. Você pode responder “me ajuda a retomar”. Não precisa executar o monitor separado para isso.
+
+As alterações ficam em `configuracao.json`; o histórico da conversa fica apenas em memória. Digite `/sair` para encerrar. Se o modelo não responder, confira se o Ollama está aberto e se `qwen2.5:3b` foi baixado.
+
+### Monitor separado e notificações
+
+Para acompanhar apenas pelo terminal, sem precisar do Ollama:
+
+```bash
+python monitor.py
+```
+
+O intervalo padrão é de 5 segundos. Para leituras mais frequentes e saída resumida com cores:
+
+```bash
+python monitor.py --intervalo 1 --formato conciso
+```
+
+Para receber notificações do **macOS**:
+
+```bash
+python monitor.py --intervalo 1 --notificar
+```
+
+O modelo escreve uma sugestão curta de retomada; se falhar, a notificação usa texto padrão. Adicione `--sem-ia` para dispensar o Ollama. `Ctrl+C` encerra o monitor.
+
+Chat e terminal podem ser usados no Windows/Linux, mas `--notificar` é exclusivo do macOS. Para ter mensagens no chat e notificações do sistema, mantenha os dois programas abertos. A exibição do banner depende das permissões e do modo Foco do Mac; `notificacao_solicitada` no log confirma o pedido ao sistema, não que o banner ficou visível.
+
+## Arquitetura em um fluxo
+
+`python agente.py` abre a interface de `chat.py`. Ela conversa com o agente e inicia seu próprio monitor em outra thread. O programa `python monitor.py` é uma entrada separada e opcional.
+
+```mermaid
+flowchart TB
+  usuario["Usuário"]:::externo
+
+  subgraph conversa["python agente.py — processo do chat"]
+    chat["Função: chat.main()<br/>Interface da conversa"]:::funcao
+    agente["Agente LangChain<br/>Qwen via Ollama"]:::agente
+    consultar["Tool: consultar_configuracao"]:::ferramenta
+    atualizar["Tool: atualizar_configuracao"]:::ferramenta
+    adicionar["Tool: adicionar_app_de_foco"]:::ferramenta
+    verificar["Tool: verificar_foco"]:::ferramenta
+    interno["Instância: MonitorFoco do chat<br/>Loop em outra thread — intervalo 1 s"]:::instancia
+  end
+
+  subgraph separado["python monitor.py"]
+    externo["Instância: MonitorFoco externo<br/>Loop com intervalo padrão de 5 s"]:::instancia
+    terminal["Saída: terminal"]:::externo
+    notificacao["Entrega: notificacoes.py<br/>Sugestão opcional do Ollama"]:::externo
+    mac["Saída: notificação do macOS"]:::externo
+  end
+
+  dados["Arquivos: configuracao.json e uso.json"]:::dado
+  calculo["Função: avaliar_foco()<br/>Cálculo compartilhado, sem LLM"]:::funcao
+
+  usuario <-->|"mensagens e respostas"| chat
+  chat <-->|"conversa"| agente
+  agente -->|"pode chamar"| consultar
+  agente -->|"pode chamar"| atualizar
+  agente -->|"pode chamar"| adicionar
+  agente -->|"pode chamar"| verificar
+  consultar -->|"lê configuração"| dados
+  atualizar -->|"lê e grava configuração"| dados
+  adicionar -->|"lê e grava configuração"| dados
+  verificar -->|"lê ambos"| dados
+  verificar -->|"avalia os dados"| calculo
+
+  chat -->|"inicia"| interno
+  interno -->|"aviso automático, sem LLM"| chat
+  interno -->|"relê ambos"| dados
+  externo -->|"relê ambos"| dados
+  interno -->|"avalia os dados"| calculo
+  externo -->|"avalia os dados"| calculo
+  externo -->|"leituras e alertas"| terminal
+  externo -->|"alerta com --notificar"| notificacao
+  notificacao -->|"solicita entrega"| mac
+
+  classDef agente fill:#ede9fe,stroke:#6d28d9,color:#211047
+  classDef ferramenta fill:#dcfce7,stroke:#15803d,color:#12351f
+  classDef funcao fill:#dbeafe,stroke:#1d4ed8,color:#172554
+  classDef instancia fill:#ffedd5,stroke:#c2410c,color:#431407
+  classDef dado fill:#f1f5f9,stroke:#475569,color:#0f172a
+  classDef externo fill:#fef9c3,stroke:#a16207,color:#422006
+```
+
+**Cores:** roxo = agente; verde = ferramentas; azul = funções; laranja = instâncias do monitor; cinza = arquivos; amarelo = usuário e saídas/entrega. Os rótulos também identificam o tipo de cada caixa.
+
+Os dois monitores usam a classe `MonitorFoco`, definida em `monitor.py`. Cada loop chama o método `verificar()` de sua própria instância. Importar essa classe no chat não inicia o programa separado. Ambos compartilham os arquivos e a função de cálculo, mas mantêm controles de alerta independentes. As setas de retorno das ferramentas e do cálculo foram omitidas para simplificar.
+
+## Configuração e dados mockados
+
+Os arquivos são lidos da pasta dos scripts. Você pode editá-los diretamente; os monitores releem os valores a cada ciclo. Os exemplos abaixo podem diferir dos seus arquivos após conversar com o agente.
+
+`configuracao.json` — objetivo, janela de foco e exceções:
 
 ```json
 {
@@ -101,7 +144,7 @@ diferentes após os testes no chat.
 }
 ```
 
-`uso.json` representa o intervalo medido e os totais acumulados da coleta mockada:
+`uso.json` — intervalo da coleta simulada e minutos acumulados:
 
 ```json
 {
@@ -111,151 +154,23 @@ diferentes após os testes no chat.
 }
 ```
 
-A duração da sessão é calculada por `fim - inicio`; não existe mais teto fixo de 60
-minutos. A tolerância deve ser não negativa e caber na sessão. Cada total por app
-precisa ser finito, não negativo e não superar o tempo medido entre `inicio` e
-`atualizado_em`. Por exemplo, 120 minutos no Docs são possíveis numa coleta de
-pelo menos 120 minutos de uma sessão que comporte essa coleta.
+Com esses exemplos, há 12 minutos de distração: 2 acima do limite. Para testar um novo alerta, reduza Instagram para 8, espere uma leitura e depois volte para 12.
 
-Todos os horários exigem data e fuso. O início da coleta deve representar o mesmo
-instante do início da sessão; `atualizado_em` deve estar entre início e fim, inclusive.
-Uma coleta de outro período gera erro: totais por app não permitem recortar quanto
-foi usado dentro ou fora de uma janela. Ao mudar a janela, ajuste também a coleta.
+As regras principais são:
 
-Com os arquivos acima: são 35 minutos medidos, 12 minutos fora do foco e 2 minutos
-acima da tolerância de 10. O monitor preserva o formato conciso/colorido existente.
-No formato verboso e na ferramenta, o resultado também identifica o período e o excesso.
+- Soma-se o uso dos apps fora de `apps_de_foco`. Só há excesso quando a soma é **maior** que o limite; leituras repetidas não acumulam tempo.
+- `youtube` e `YouTube` são o mesmo app. Adicionar uma exceção preserva as existentes e evita duplicação.
+- Os horários exigem data e fuso. O início da coleta deve coincidir com o da sessão, e `atualizado_em` deve estar entre início e fim. Ao mudar a janela, ajuste também os dados de uso.
+- Não há teto fixo de 60 minutos. O limite deve caber na duração da sessão e cada total por app deve caber no intervalo medido.
+- O aviso sai uma vez por episódio de excesso. Voltar ao limite ou abaixo rearma o alerta; uma nova sessão ou reiniciar o programa também permite um novo aviso.
+- Arquivos inválidos geram erro e nova tentativa no próximo ciclo, sem sobrescrever os dados.
 
-**O relógio da avaliação é `atualizado_em`.** Este protótipo pode reproduzir um
-snapshot histórico, mesmo depois do horário planejado; não verifica se a sessão
-está ativa no relógio do computador e não inicia/encerra automaticamente por horário.
-`horario` no log é quando o arquivo foi lido; `atualizado_em` é até quando houve medição.
-Para avançar a simulação, atualize esse horário e os totais juntos.
-
-Os programas leem os JSON na mesma pasta dos scripts. Para usar outros arquivos:
-
-```bash
-python monitor.py --configuracao CAMINHO --uso CAMINHO
-```
-
-## Conversar com o agente
-
-Com o ambiente ativado e o Ollama aberto:
-
-```bash
-python agente.py
-```
-
-O chat também monitora os JSON a cada segundo. Se o limite for ultrapassado,
-ele mostra uma mensagem automaticamente, mesmo enquanto você digita ou aguarda
-o modelo. O texto digitado é preservado. Esse aviso é montado com os valores
-calculados, sem chamada extra ao Ollama, e entra no histórico da conversa:
-você pode responder “me ajuda a retomar”. A regra é uma mensagem por episódio
-de excesso, inclusive se abrir o chat já acima do limite.
-
-Não precisa rodar `monitor.py` para receber avisos no chat. Para receber também
-notificações do Mac, mantenha o monitor separado com `--notificar`; cada processo
-acompanha os mesmos arquivos de forma independente. Fechar o chat encerra apenas
-seu próprio monitoramento. Os avisos seguem o snapshot `atualizado_em`, não o
-relógio real da sessão.
-
-Digite `/sair` para encerrar. A conversa existe só enquanto o programa está aberto. O que for alterado permanece em `configuracao.json`.
-
-Exemplos do que dizer:
-
-- `Mude meu limite para 30 minutos`
-- `Como está meu foco?`
-- `Adicione YouTube aos apps de foco.`
-- `Adicione YouTube aos apps permitidos.`
-
-A ferramenta `adicionar_app_de_foco` acrescenta o nome à lista salva sem remover
-os apps existentes nem duplicar o mesmo nome. A comparação ignora maiúsculas,
-minúsculas e espaços nas extremidades: `youtube` e `YouTube` são o mesmo app,
-tanto nas exceções quanto no cálculo do uso. A grafia da primeira ocorrência
-é preservada para exibição. Esses apps ficam fora da soma
-de distração. `atualizar_configuracao` continua permitindo substituir a lista
-inteira quando isso for solicitado.
-
-Se não houver resposta, confira se o Ollama está aberto e se `qwen2.5:3b` foi baixado.
-
-## Acompanhar sem chat
-
-```bash
-python monitor.py
-```
-
-A cada 5 segundos o monitor imprime uma linha. O formato padrão, `verboso`, é um JSON com `"tipo": "leitura"`. Para observar mais rápido:
-
-```bash
-python monitor.py --intervalo 1
-```
-
-`--formato conciso` resume cada leitura a `{ horário | ultrapassou: false }` ou `{ horário | ultrapassou: true }`. `false` sai em branco sobre verde e `true` em branco sobre vermelho. Em arquivo, ou com `NO_COLOR`, a linha sai sem cor. JSON inválido aparece como `erro`, em branco sobre âmbar.
-
-`Ctrl+C` encerra. O monitor só lê os arquivos. Usando os dois JSON de exemplo deste README, o uso já ultrapassa o limite (Instagram 12, limite 10). Para testar uma transição nesse cenário, reduza Instagram para 8 em `minutos_por_app`, espere uma leitura e depois volte para 12. A leitura seguinte imprime `"tipo": "alerta"` no formato verboso. No conciso, essa passagem aparece como `true` a cada leitura, enquanto o uso seguir acima do limite.
-
-O alerta sai quando os minutos fora dos apps de foco passam do limite, inclusive se o monitor já abrir nessa situação. Enquanto o uso continuar acima, o aviso não se repete na mesma execução. Reiniciar o processo reinicia esse controle e pode gerar um novo aviso. Depois que o uso volta ao limite ou abaixo, uma nova ultrapassagem gera outro alerta. Uma nova sessão (início/fim diferentes, com coleta compatível) também rearma o alerta. JSON ausente ou inválido gera `"tipo": "erro_leitura"` e a tentativa seguinte acontece no próximo ciclo.
-
-Para guardar a saída:
-
-```bash
-python monitor.py > monitor.log
-```
-
-## Notificações autônomas no Mac
-
-Com o ambiente Python ativado:
-
-```bash
-python monitor.py --intervalo 1 --notificar
-```
-
-`--notificar` está disponível apenas no macOS; no Windows/Linux, o programa
-informa essa restrição e encerra.
-
-Não precisa abrir o chat. Mantenha o monitor em execução: ele relê os JSON e,
-ao detectar excesso, solicita uma notificação do macOS. Sem `--notificar`,
-a saída continua somente no terminal.
-
-Objetivo, minutos e limite vêm do cálculo. O Ollama escreve apenas uma sugestão
-curta de retomada. Isso acontece em uma thread separada, sem parar as leituras.
-Se o modelo falhar, usamos uma mensagem padrão. Para dispensar o Ollama:
-
-```bash
-python monitor.py --intervalo 1 --notificar --sem-ia
-```
-
-O aviso segue a regra de uma entrega por episódio de excesso descrita acima.
-Se a configuração mudar ou o excesso deixar de existir durante a geração,
-o aviso pendente é descartado. Falhas de entrega aparecem no terminal, sem
-repetição automática naquele episódio. `Ctrl+C` encerra o monitoramento.
-
-O evento `notificacao_solicitada` registra o pedido ao sistema; a apresentação
-depende das permissões de notificação e do modo Foco do macOS. Banners podem
-sumir automaticamente e continuar na Central de Notificações. Para manter o
-aviso na tela, escolha o estilo persistente/Alertas para o aplicativo emissor
-em Ajustes do Sistema > Notificações (o nome varia conforme a versão).
-Veja o [guia da Apple](https://support.apple.com/pt-br/guide/mac-help/mchle7f8a9b0/mac).
-
-Este protótipo não abre uma conversa ao clicar na notificação. A avaliação
-continua baseada no snapshot `atualizado_em`, inclusive para dados históricos.
-Numa integração Android futura, a função de entrega será substituída pela
-notificação do dispositivo, mantendo a avaliação separada.
+**A avaliação usa `atualizado_em`, não o relógio atual do computador.** Os exemplos históricos continuam funcionando. O protótipo não agenda sessões, não bloqueia apps e não altera automaticamente `uso.json`.
 
 ## Testes
-
-Na mesma pasta, com o ambiente ativado:
 
 ```bash
 python -m pytest tests -q
 ```
 
-## Arquivos
-
-- `agente.py`: ferramentas, validação e avaliação do foco; entrada do programa
-- `chat.py`: conversa e avisos autônomos no terminal
-- `monitor.py`: leitura periódica e disparo de alertas
-- `notificacoes.py`: sugestão opcional do modelo e entrega nativa no macOS
-- `configuracao.json`: objetivo, início/fim da sessão, limite e apps de foco
-- `uso.json`: início da coleta, instante de atualização e minutos acumulados por app
-- `tests/`: testes de configuração, períodos, cálculo, chat, monitor e notificações
+Os testes cobrem configuração, cálculo, períodos, avisos no chat e entrega de notificações. Para usar outros arquivos no monitor, passe `--configuracao CAMINHO --uso CAMINHO`; para guardar os logs, use `python monitor.py > monitor.log`.
