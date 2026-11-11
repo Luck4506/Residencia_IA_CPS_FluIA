@@ -1,0 +1,6 @@
+=== Mobile Phone Use Logs ===
+
+Detail logs of mobile phone usage of 342 people over the course of ca. 4 weeks each. Contains events from 25 physical and virtual sensors (e.g. app in foreground, received notifications, ambient noise level, semantic location, ...), frequent self reports of emotions (valence and arousal), and for some participants self-reported traits (Big 5 Traits, Boredom Proneness [BPS], Patient Health Questionnaire [PHQ8]).
+
+Sensors: acceleration, airplane mode, app in foreground, audio, battery, battery drain, cell tower details, data consumption, ambient light, ambient noise, notifications, notification center access, notification dismissed, notifications cleared, device orientation, phone calls, photos, proximity (screen covered or not), screen events (on, off, unlocked), screen orientation (portrait, landscape), semantic location (home, work, ...), sms events, user activity (sitting, in vehicle, ...), wifi details.
+
