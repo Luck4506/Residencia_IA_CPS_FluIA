@@ -1,6 +1,6 @@
 from pprint import pprint
-from schemas import AlertAnalysisInput, RagChunk
-from analista import analyze_alert
+from Residencia_IA_CPS_FluIA.analise_alerta.schemas import AlertAnalysisInput, RagChunk
+from Residencia_IA_CPS_FluIA.analise_alerta.analista import analyze_alert
 
 
 # Cenário 1: Alerta válido + metas + uso + RAG confiável com fonte

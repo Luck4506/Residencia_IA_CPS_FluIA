@@ -1,5 +1,5 @@
 from typing import List
-from schemas import AlertAnalysisInput, AlertAnalysisOutput, RagChunk
+from Residencia_IA_CPS_FluIA.analise_alerta.schemas import AlertAnalysisInput, AlertAnalysisOutput, RagChunk
 
 
 MIN_RAG_SCORE = 0.65
