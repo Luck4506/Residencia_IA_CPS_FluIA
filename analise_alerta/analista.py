@@ -2,7 +2,7 @@ from typing import List
 from Residencia_IA_CPS_FluIA.analise_alerta.schemas import AlertAnalysisInput, AlertAnalysisOutput, RagChunk
 
 
-MIN_RAG_SCORE = 0.65
+MIN_RAG_SCORE = 0.60
 
 
 def _extract_valid_citations(
@@ -127,3 +127,18 @@ def analyze_alert(data: AlertAnalysisInput) -> AlertAnalysisOutput:
         citations=citations,
         limitations=limitations,
     )
+
+def analisar_alerta_com_rag(data: AlertAnalysisInput, consultor=None, top_k: int = 3) -> AlertAnalysisOutput:
+    if not data.rag_chunks and data.rag_status == 'empty':
+        query = (data.alert_summary or data.alert_type).strip()
+        try:
+            from Residencia_IA_CPS_FluIA.rag_agente_acao.util.consulta import ConsultorRAG
+            from Residencia_IA_CPS_FluIA.analise_alerta.rag_adapter import consultar_rag_para_analista
+            rag = consultor or ConsultorRAG()
+            status, chunks = consultar_rag_para_analista(rag, query, top_k=top_k)
+            data.rag_status = status
+            data.rag_chunks = chunks
+        except Exception:
+            data.rag_status = 'error'
+            data.rag_chunks = []
+    return analyze_alert(data)
