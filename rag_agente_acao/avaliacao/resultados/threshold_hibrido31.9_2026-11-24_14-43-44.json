@@ -1,0 +1,542 @@
+{
+    "experimento": "threshold",
+    "configuracao": {
+        "top_k": 10,
+        "valores_k": [
+            2,
+            3,
+            4
+        ],
+        "threshold": 31.9
+    },
+    "resultados": {
+        "top_2": {
+            "medias": {
+                "precision": 0.7333333333333333,
+                "recall": 0.40238095238095234,
+                "mrr": 0.9333333333333333,
+                "ndcg": 0.8227667488472178
+            },
+            "resultados_individuais": [
+                {
+                    "diagnostico_id": "D001",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 30.5000",
+                        "CHUNK 01 - Distância 31.2480"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.4,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D002",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.2320",
+                        "CHUNK 01 - Distância 31.2480"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.4,
+                    "mrr": 1.0,
+                    "ndcg": 0.5501973697194446
+                },
+                {
+                    "diagnostico_id": "D003",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 07 - Distância 31.2480"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8339912323981488
+                },
+                {
+                    "diagnostico_id": "D004",
+                    "resultados_recuperados": [
+                        "CHUNK 03 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.0000"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D005",
+                    "resultados_recuperados": [
+                        "CHUNK 04 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.2480"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.25,
+                    "mrr": 1.0,
+                    "ndcg": 0.6131471927654584
+                },
+                {
+                    "diagnostico_id": "D006",
+                    "resultados_recuperados": [
+                        "CHUNK 06 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.4921"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D007",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.7871546029909718
+                },
+                {
+                    "diagnostico_id": "D008",
+                    "resultados_recuperados": [
+                        "CHUNK 12 - Distância 30.5000",
+                        "CHUNK 13 - Distância 31.2480"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.9173194127129571
+                },
+                {
+                    "diagnostico_id": "D009",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.0000"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.7871546029909718
+                },
+                {
+                    "diagnostico_id": "D010",
+                    "resultados_recuperados": [
+                        "CHUNK 10 - Distância 30.5000"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.25,
+                    "mrr": 1.0,
+                    "ndcg": 0.7871546029909718
+                },
+                {
+                    "diagnostico_id": "D011",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.4921",
+                        "CHUNK 10 - Distância 31.4921"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.32529605457916694
+                },
+                {
+                    "diagnostico_id": "D012",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 14 - Distância 31.7323"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D013",
+                    "resultados_recuperados": [
+                        "CHUNK 13 - Distância 30.5000"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.9173194127129571
+                },
+                {
+                    "diagnostico_id": "D014",
+                    "resultados_recuperados": [
+                        "CHUNK 08 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.2480"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D015",
+                    "resultados_recuperados": [
+                        "CHUNK 01 - Distância 31.4921",
+                        "CHUNK 07 - Distância 31.7008"
+                    ],
+                    "precision": 0.0,
+                    "recall": null,
+                    "mrr": 0.0,
+                    "ndcg": null
+                }
+            ]
+        },
+        "top_3": {
+            "medias": {
+                "precision": 0.5777777777777777,
+                "recall": 0.4880952380952381,
+                "mrr": 0.9333333333333333,
+                "ndcg": 0.7472792130501212
+            },
+            "resultados_individuais": [
+                {
+                    "diagnostico_id": "D001",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 30.5000",
+                        "CHUNK 01 - Distância 31.2480",
+                        "CHUNK 07 - Distância 31.4921"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.6,
+                    "mrr": 1.0,
+                    "ndcg": 1.0
+                },
+                {
+                    "diagnostico_id": "D002",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.2320",
+                        "CHUNK 01 - Distância 31.2480"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.4,
+                    "mrr": 1.0,
+                    "ndcg": 0.47078692139073114
+                },
+                {
+                    "diagnostico_id": "D003",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 07 - Distância 31.2480",
+                        "CHUNK 01 - Distância 31.7323"
+                    ],
+                    "precision": 1.0,
+                    "recall": 0.75,
+                    "mrr": 1.0,
+                    "ndcg": 0.8579514172105233
+                },
+                {
+                    "diagnostico_id": "D004",
+                    "resultados_recuperados": [
+                        "CHUNK 03 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.0000"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8556691603792903
+                },
+                {
+                    "diagnostico_id": "D005",
+                    "resultados_recuperados": [
+                        "CHUNK 04 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.2480",
+                        "CHUNK 03 - Distância 31.7323"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.6580725857971756
+                },
+                {
+                    "diagnostico_id": "D006",
+                    "resultados_recuperados": [
+                        "CHUNK 06 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.4921",
+                        "CHUNK 10 - Distância 31.7323"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8556691603792903
+                },
+                {
+                    "diagnostico_id": "D007",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000"
+                    ],
+                    "precision": 0.3333333333333333,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.6735439182299785
+                },
+                {
+                    "diagnostico_id": "D008",
+                    "resultados_recuperados": [
+                        "CHUNK 12 - Distância 30.5000",
+                        "CHUNK 13 - Distância 31.2480",
+                        "CHUNK 05 - Distância 31.2480"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 1.0,
+                    "mrr": 1.0,
+                    "ndcg": 0.9828422279067397
+                },
+                {
+                    "diagnostico_id": "D009",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.0000"
+                    ],
+                    "precision": 0.3333333333333333,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.6735439182299785
+                },
+                {
+                    "diagnostico_id": "D010",
+                    "resultados_recuperados": [
+                        "CHUNK 10 - Distância 30.5000"
+                    ],
+                    "precision": 0.3333333333333333,
+                    "recall": 0.25,
+                    "mrr": 1.0,
+                    "ndcg": 0.6735439182299785
+                },
+                {
+                    "diagnostico_id": "D011",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.4921",
+                        "CHUNK 10 - Distância 31.4921"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.2783458018964516
+                },
+                {
+                    "diagnostico_id": "D012",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 14 - Distância 31.7323"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.7653606369886218
+                },
+                {
+                    "diagnostico_id": "D013",
+                    "resultados_recuperados": [
+                        "CHUNK 13 - Distância 30.5000"
+                    ],
+                    "precision": 0.3333333333333333,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.8609101556836468
+                },
+                {
+                    "diagnostico_id": "D014",
+                    "resultados_recuperados": [
+                        "CHUNK 08 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.2480",
+                        "CHUNK 05 - Distância 31.4921"
+                    ],
+                    "precision": 0.6666666666666666,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8556691603792903
+                },
+                {
+                    "diagnostico_id": "D015",
+                    "resultados_recuperados": [
+                        "CHUNK 01 - Distância 31.4921",
+                        "CHUNK 07 - Distância 31.7008"
+                    ],
+                    "precision": 0.0,
+                    "recall": null,
+                    "mrr": 0.0,
+                    "ndcg": null
+                }
+            ]
+        },
+        "top_4": {
+            "medias": {
+                "precision": 0.43333333333333335,
+                "recall": 0.4880952380952381,
+                "mrr": 0.9333333333333333,
+                "ndcg": 0.7076238312080967
+            },
+            "resultados_individuais": [
+                {
+                    "diagnostico_id": "D001",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 30.5000",
+                        "CHUNK 01 - Distância 31.2480",
+                        "CHUNK 07 - Distância 31.4921"
+                    ],
+                    "precision": 0.75,
+                    "recall": 0.6,
+                    "mrr": 1.0,
+                    "ndcg": 0.920287093242588
+                },
+                {
+                    "diagnostico_id": "D002",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.2320",
+                        "CHUNK 01 - Distância 31.2480"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.4,
+                    "mrr": 1.0,
+                    "ndcg": 0.4187304303095542
+                },
+                {
+                    "diagnostico_id": "D003",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 07 - Distância 31.2480",
+                        "CHUNK 01 - Distância 31.7323"
+                    ],
+                    "precision": 0.75,
+                    "recall": 0.75,
+                    "mrr": 1.0,
+                    "ndcg": 0.7630848474974802
+                },
+                {
+                    "diagnostico_id": "D004",
+                    "resultados_recuperados": [
+                        "CHUNK 03 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.0000"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8216212264723879
+                },
+                {
+                    "diagnostico_id": "D005",
+                    "resultados_recuperados": [
+                        "CHUNK 04 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.2480",
+                        "CHUNK 03 - Distância 31.7323"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.5982318540006005
+                },
+                {
+                    "diagnostico_id": "D006",
+                    "resultados_recuperados": [
+                        "CHUNK 06 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.4921",
+                        "CHUNK 10 - Distância 31.7323"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8216212264723879
+                },
+                {
+                    "diagnostico_id": "D007",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000"
+                    ],
+                    "precision": 0.25,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.6735439182299785
+                },
+                {
+                    "diagnostico_id": "D008",
+                    "resultados_recuperados": [
+                        "CHUNK 12 - Distância 30.5000",
+                        "CHUNK 13 - Distância 31.2480",
+                        "CHUNK 05 - Distância 31.2480"
+                    ],
+                    "precision": 0.5,
+                    "recall": 1.0,
+                    "mrr": 1.0,
+                    "ndcg": 0.9828422279067397
+                },
+                {
+                    "diagnostico_id": "D009",
+                    "resultados_recuperados": [
+                        "CHUNK 05 - Distância 30.5000",
+                        "CHUNK 08 - Distância 31.0000"
+                    ],
+                    "precision": 0.25,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.6735439182299785
+                },
+                {
+                    "diagnostico_id": "D010",
+                    "resultados_recuperados": [
+                        "CHUNK 10 - Distância 30.5000"
+                    ],
+                    "precision": 0.25,
+                    "recall": 0.25,
+                    "mrr": 1.0,
+                    "ndcg": 0.6467429303328278
+                },
+                {
+                    "diagnostico_id": "D011",
+                    "resultados_recuperados": [
+                        "CHUNK 14 - Distância 31.4921",
+                        "CHUNK 10 - Distância 31.4921"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.26727014332996396
+                },
+                {
+                    "diagnostico_id": "D012",
+                    "resultados_recuperados": [
+                        "CHUNK 00 - Distância 31.2320",
+                        "CHUNK 14 - Distância 31.7323"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.6366824387328317
+                },
+                {
+                    "diagnostico_id": "D013",
+                    "resultados_recuperados": [
+                        "CHUNK 13 - Distância 30.5000"
+                    ],
+                    "precision": 0.25,
+                    "recall": 0.3333333333333333,
+                    "mrr": 1.0,
+                    "ndcg": 0.8609101556836468
+                },
+                {
+                    "diagnostico_id": "D014",
+                    "resultados_recuperados": [
+                        "CHUNK 08 - Distância 30.5000",
+                        "CHUNK 04 - Distância 31.2480",
+                        "CHUNK 05 - Distância 31.4921"
+                    ],
+                    "precision": 0.5,
+                    "recall": 0.5,
+                    "mrr": 1.0,
+                    "ndcg": 0.8216212264723879
+                },
+                {
+                    "diagnostico_id": "D015",
+                    "resultados_recuperados": [
+                        "CHUNK 01 - Distância 31.4921",
+                        "CHUNK 07 - Distância 31.7008"
+                    ],
+                    "precision": 0.0,
+                    "recall": null,
+                    "mrr": 0.0,
+                    "ndcg": null
+                }
+            ]
+        }
+    }
+}

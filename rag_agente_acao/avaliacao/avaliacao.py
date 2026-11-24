@@ -6,8 +6,8 @@ from .metricas import avaliar_dataset
 
 # CONFIGURAÇÕES DO EXPERIMENTO
 TOP_K = 10
-VALORES_K = [3, 4, 5, 10]
-THRESHOLD = 0.36 #None # None = sem threshold
+VALORES_K = [2, 3, 4]
+THRESHOLD = None # None = sem threshold
 
 CAMINHO_DIAGNOSTICOS = Path("avaliacao/diagnosticos_teste.json")
 PASTA_RESULTADOS = Path("avaliacao/resultados")
