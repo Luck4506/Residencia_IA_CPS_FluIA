@@ -1,0 +1,404 @@
+{
+    "versao": "1.0",
+    "descricao": "Dataset de avaliação da recuperação semântica do RAG.",
+    "escala_relevancia": {
+        "0": "Irrelevante",
+        "1": "Pouco relevante",
+        "2": "Relevante",
+        "3": "Muito relevante"
+    },
+    "diagnosticos": [
+        {
+            "diagnostico_id": "D001",
+            "diagnostico": "O usuário está permanecendo no Instagram por mais tempo do que havia planejado. O comportamento ocorre repetidamente, mesmo após ultrapassar o limite de duração que estabeleceu para o aplicativo.",
+            "evento_detectado": {
+                "aplicativo": "Instagram",
+                "ocorrencia": "O usuário permaneceu 75 minutos no aplicativo durante uma única sessão.",
+                "frequencia": "O comportamento foi identificado em 4 dos últimos 7 dias.",
+                "meta": "Limite pessoal de 30 minutos por sessão."
+            },
+            "objetivos_usuario": [
+                "Reduzir o tempo gasto no Instagram.",
+                "Evitar permanecer no aplicativo além do tempo planejado."
+            ],
+            "divergencias": [
+                "O tempo observado ultrapassa o limite pessoal definido pelo usuário.",
+                "O usuário relata dificuldade em perceber quanto tempo permanece no aplicativo."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 01": 3,
+                "CHUNK 07": 3,
+                "CHUNK 14": 3,
+                "CHUNK 02": 2,
+                "CHUNK 00": 2
+            }
+        },
+        {
+            "diagnostico_id": "D002",
+            "diagnostico": "O usuário concentra uma parcela significativa do seu tempo diário no TikTok e ultrapassa frequentemente o limite de utilização que estabeleceu para a plataforma. Apesar de não apresentar necessariamente sessões muito longas, o tempo acumulado ao longo do dia está acima do planejado.",
+            "evento_detectado": {
+                "aplicativo": "TikTok",
+                "ocorrencia": "O usuário acumulou 3 horas e 20 minutos de utilização no dia.",
+                "frequencia": "O limite foi ultrapassado em 6 dos últimos 7 dias.",
+                "meta": "Limite diário de 2 horas."
+            },
+            "objetivos_usuario": [
+                "Reduzir o tempo diário gasto no TikTok.",
+                "Manter o aplicativo disponível para momentos de lazer, sem ultrapassar frequentemente o limite pessoal."
+            ],
+            "divergencias": [
+                "O tempo diário de utilização ultrapassa a meta estabelecida pelo usuário.",
+                "O aplicativo representa uma parcela expressiva do tempo total de uso."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 02": 3,
+                "CHUNK 01": 2,
+                "CHUNK 07": 2,
+                "CHUNK 10": 2,
+                "CHUNK 14": 2
+            }
+        },
+        {
+            "diagnostico_id": "D003",
+            "diagnostico": "O usuário apresenta sessões prolongadas no YouTube e relata que frequentemente perde a noção do tempo enquanto assiste aos vídeos. Ele não deseja deixar de utilizar a plataforma, mas gostaria de ter maior consciência sobre a duração das sessões.",
+            "evento_detectado": {
+                "aplicativo": "YouTube",
+                "ocorrencia": "Foram identificadas sessões de utilização entre 60 e 90 minutos.",
+                "frequencia": "3 sessões prolongadas por dia, em média.",
+                "meta": "O usuário deseja limitar cada sessão a 40 minutos."
+            },
+            "objetivos_usuario": [
+                "Ter maior consciência sobre o tempo gasto no aplicativo.",
+                "Evitar ultrapassar a duração planejada das sessões."
+            ],
+            "divergencias": [
+                "O usuário apresenta dificuldade em perceber a duração das sessões.",
+                "O tempo observado frequentemente ultrapassa o planejamento pessoal."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 07": 3,
+                "CHUNK 01": 2,
+                "CHUNK 14": 2,
+                "CHUNK 00": 2
+            }
+        },
+        {
+            "diagnostico_id": "D004",
+            "diagnostico": "O usuário relata que interrompe frequentemente suas atividades para verificar notificações recebidas em redes sociais e aplicativos de mensagens. Mesmo quando está realizando tarefas importantes, os alertas recebidos despertam sua atenção e levam ao acesso ao smartphone.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "WhatsApp",
+                    "Facebook"
+                ],
+                "ocorrencia": "Foram registradas 48 notificações não essenciais durante o período de estudo.",
+                "comportamento": "O usuário abriu aplicativos após receber diversos alertas."
+            },
+            "objetivos_usuario": [
+                "Manter a concentração durante os estudos.",
+                "Reduzir interrupções causadas por notificações.",
+                "Continuar recebendo mensagens importantes."
+            ],
+            "divergencias": [
+                "As notificações não essenciais provocam interrupções durante atividades prioritárias.",
+                "O usuário deseja reduzir distrações sem perder comunicações importantes."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 03": 3,
+                "CHUNK 04": 2,
+                "CHUNK 06": 2,
+                "CHUNK 05": 1
+            }
+        },
+        {
+            "diagnostico_id": "D005",
+            "diagnostico": "O usuário costuma desbloquear o smartphone e acessar aplicativos recreativos durante os períodos reservados para estudar. O comportamento ocorre mesmo quando não recebe notificações e não possui uma necessidade específica de utilizar o aparelho.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "TikTok"
+                ],
+                "ocorrencia": "Foram registrados 18 desbloqueios durante 2 horas de estudo.",
+                "notificacoes": "Não foram identificadas notificações imediatamente anteriores à maioria dos acessos.",
+                "meta": "Permanecer concentrado durante os períodos de estudo."
+            },
+            "objetivos_usuario": [
+                "Evitar acessar redes sociais durante os estudos.",
+                "Manter períodos contínuos de concentração."
+            ],
+            "divergencias": [
+                "O usuário acessa o smartphone repetidamente durante uma atividade prioritária.",
+                "Os acessos não estão necessariamente associados a notificações externas."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 04": 3,
+                "CHUNK 06": 3,
+                "CHUNK 00": 2,
+                "CHUNK 03": 2
+            }
+        },
+        {
+            "diagnostico_id": "D006",
+            "diagnostico": "O usuário relata dificuldade em permanecer concentrado em atividades acadêmicas por períodos prolongados, pois costuma consultar o smartphone repetidamente. Ele gostaria de experimentar períodos delimitados sem utilizar o dispositivo, mas não pretende ficar incomunicável durante todo o dia.",
+            "evento_detectado": {
+                "aplicativo": "Diversos aplicativos",
+                "ocorrencia": "Foram identificados acessos ao smartphone a cada 10 ou 15 minutos durante atividades acadêmicas.",
+                "frequencia": "O comportamento ocorre diariamente."
+            },
+            "objetivos_usuario": [
+                "Experimentar períodos contínuos de concentração.",
+                "Reduzir a alternância entre estudos e utilização do smartphone.",
+                "Manter a possibilidade de consultar o dispositivo após as atividades planejadas."
+            ],
+            "divergencias": [
+                "Os acessos frequentes dificultam a continuidade das atividades prioritárias.",
+                "O usuário demonstra interesse em estabelecer períodos específicos sem smartphone."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 06": 3,
+                "CHUNK 04": 2,
+                "CHUNK 03": 2,
+                "CHUNK 00": 1
+            }
+        },
+        {
+            "diagnostico_id": "D007",
+            "diagnostico": "O usuário costuma utilizar o smartphone enquanto está deitado na cama, próximo ao horário habitual de dormir. Ele relata dificuldade em encerrar a utilização e gostaria de evitar que o aparelho permaneça disponível durante sua rotina de descanso.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "YouTube"
+                ],
+                "ocorrencia": "Foram registrados aproximadamente 50 minutos de utilização antes do horário habitual de dormir.",
+                "frequencia": "O comportamento ocorreu em 6 dos últimos 7 dias."
+            },
+            "objetivos_usuario": [
+                "Reduzir a utilização do smartphone antes de dormir.",
+                "Manter uma rotina noturna com menos distrações.",
+                "Evitar verificações frequentes do dispositivo na cama."
+            ],
+            "divergencias": [
+                "A utilização do smartphone ocorre durante o período reservado ao descanso.",
+                "O usuário relata dificuldade em encerrar o uso antes de dormir."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 05": 3,
+                "CHUNK 06": 2,
+                "CHUNK 03": 2,
+                "CHUNK 12": 0
+            }
+        },
+        {
+            "diagnostico_id": "D008",
+            "diagnostico": "O usuário possui o hábito de ler livros em seu tablet durante o período que antecede o sono. Ele relata dificuldade para iniciar o sono e gostaria de manter a leitura como parte da rotina noturna, mas está disposto a experimentar outro formato de leitura.",
+            "evento_detectado": {
+                "aplicativo": "Aplicativo de leitura digital",
+                "ocorrencia": "Foram identificadas sessões de leitura de aproximadamente 60 minutos antes do horário habitual de dormir.",
+                "dispositivo": "Tablet com tela emissora de luz."
+            },
+            "objetivos_usuario": [
+                "Manter o hábito de leitura noturna.",
+                "Experimentar alternativas que não envolvam a utilização de telas emissoras de luz.",
+                "Melhorar sua rotina de descanso."
+            ],
+            "divergencias": [
+                "A leitura ocorre em dispositivo com tela emissora de luz durante o período noturno.",
+                "O usuário relata dificuldade para iniciar o sono."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 12": 3,
+                "CHUNK 05": 1,
+                "CHUNK 00": 0,
+                "CHUNK 03": 0
+            }
+        },
+        {
+            "diagnostico_id": "D009",
+            "diagnostico": "O usuário utiliza frequentemente o smartphone durante a noite e gostaria de reduzir as verificações do aparelho durante o período de descanso. Entretanto, precisa manter o dispositivo próximo à cama para receber comunicações familiares importantes.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "WhatsApp",
+                    "Instagram"
+                ],
+                "ocorrencia": "Foram registrados aproximadamente 40 minutos de utilização após o horário habitual de dormir.",
+                "comportamento": "O usuário realiza verificações frequentes no aparelho."
+            },
+            "objetivos_usuario": [
+                "Reduzir a utilização recreativa do smartphone durante a noite.",
+                "Manter o recebimento de comunicações familiares importantes.",
+                "Evitar interrupções desnecessárias durante o descanso."
+            ],
+            "divergencias": [
+                "O usuário deseja reduzir o uso noturno, mas precisa manter o aparelho disponível para comunicações importantes.",
+                "A utilização recreativa ocorre durante o período reservado ao descanso."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 05": 3,
+                "CHUNK 03": 2,
+                "CHUNK 06": 2,
+                "CHUNK 12": 0
+            }
+        },
+        {
+            "diagnostico_id": "D010",
+            "diagnostico": "O usuário considera que passa tempo excessivo utilizando o smartphone e deseja reduzir sua utilização diária. Entretanto, não pretende abandonar aplicativos ou interromper completamente o uso do dispositivo, pois depende dele para atividades acadêmicas, profissionais e pessoais.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "YouTube",
+                    "TikTok",
+                    "Outros"
+                ],
+                "ocorrencia": "O tempo médio diário de utilização é de aproximadamente 7 horas.",
+                "frequencia": "A média foi observada durante os últimos 14 dias."
+            },
+            "objetivos_usuario": [
+                "Reduzir gradualmente o tempo total de utilização do smartphone.",
+                "Manter acesso aos aplicativos necessários.",
+                "Desenvolver hábitos de utilização mais equilibrados."
+            ],
+            "divergencias": [
+                "O usuário considera seu tempo total de utilização excessivo em relação aos próprios objetivos.",
+                "O usuário deseja reduzir o uso sem recorrer à abstinência completa."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 10": 3,
+                "CHUNK 02": 2,
+                "CHUNK 00": 2,
+                "CHUNK 11": 1
+            }
+        },
+        {
+            "diagnostico_id": "D011",
+            "diagnostico": "O usuário identifica o Instagram como uma das principais fontes de utilização recreativa do smartphone e manifesta interesse em experimentar um período sem acessar a plataforma. Ele não depende do aplicativo para suas atividades profissionais ou acadêmicas.",
+            "evento_detectado": {
+                "aplicativo": "Instagram",
+                "ocorrencia": "O aplicativo representa aproximadamente 40% do tempo diário de utilização.",
+                "tempo_medio_diario": "2 horas e 30 minutos."
+            },
+            "objetivos_usuario": [
+                "Experimentar um período sem utilizar o Instagram.",
+                "Reduzir a dependência da plataforma para entretenimento.",
+                "Utilizar o tempo disponível em outras atividades."
+            ],
+            "divergencias": [
+                "O usuário identifica uma plataforma específica como responsável por uma parcela expressiva do tempo de utilização.",
+                "O usuário demonstra interesse em experimentar uma pausa temporária."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 11": 3,
+                "CHUNK 02": 2,
+                "CHUNK 10": 2,
+                "CHUNK 14": 1
+            }
+        },
+        {
+            "diagnostico_id": "D012",
+            "diagnostico": "O usuário relata que já tentou reduzir o tempo gasto em redes sociais, mas continua apresentando sessões prolongadas e recorrentes. Ele demonstra dificuldade em interromper a utilização mesmo quando percebe que está ultrapassando o tempo planejado.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "TikTok",
+                    "Instagram"
+                ],
+                "ocorrencia": "Foram identificadas sessões superiores a 60 minutos em ambos os aplicativos.",
+                "frequencia": "O comportamento ocorre diariamente."
+            },
+            "objetivos_usuario": [
+                "Reduzir o tempo gasto em redes sociais.",
+                "Desenvolver maior controle sobre a duração das sessões.",
+                "Evitar depender exclusivamente da própria percepção para encerrar o uso."
+            ],
+            "divergencias": [
+                "O comportamento permanece recorrente apesar das tentativas anteriores de redução.",
+                "O usuário apresenta dificuldade em interromper sessões prolongadas.",
+                "O tempo observado frequentemente ultrapassa o planejado."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 00": 3,
+                "CHUNK 01": 3,
+                "CHUNK 07": 3,
+                "CHUNK 14": 3,
+                "CHUNK 02": 2,
+                "CHUNK 10": 2
+            }
+        },
+        {
+            "diagnostico_id": "D013",
+            "diagnostico": "O usuário costuma acessar redes sociais imediatamente após acordar e acaba adiando atividades que gostaria de realizar pela manhã. Ele deseja começar o dia realizando uma breve atividade física antes de utilizar o smartphone para entretenimento.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "TikTok"
+                ],
+                "ocorrencia": "O usuário permanece aproximadamente 35 minutos nas redes sociais após desligar o despertador.",
+                "frequencia": "O comportamento ocorre em 5 dias da semana."
+            },
+            "objetivos_usuario": [
+                "Iniciar a manhã com uma atividade física curta.",
+                "Evitar acessar redes sociais imediatamente após acordar.",
+                "Construir uma rotina matinal mais consistente."
+            ],
+            "divergencias": [
+                "O acesso às redes sociais antecede e atrasa a atividade matinal planejada.",
+                "O usuário apresenta dificuldade em iniciar a rotina desejada."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 13": 3,
+                "CHUNK 04": 1,
+                "CHUNK 10": 1,
+                "CHUNK 00": 0
+            }
+        },
+        {
+            "diagnostico_id": "D014",
+            "diagnostico": "O usuário relata que costuma verificar o smartphone durante refeições e encontros com amigos, mesmo quando gostaria de aproveitar melhor esses momentos. Ele identifica que a disponibilidade do aparelho facilita distrações durante as interações presenciais.",
+            "evento_detectado": {
+                "aplicativos": [
+                    "Instagram",
+                    "WhatsApp",
+                    "YouTube"
+                ],
+                "ocorrencia": "Foram registrados acessos frequentes ao smartphone durante os horários habituais de almoço e jantar.",
+                "frequencia": "O comportamento ocorre em diversos dias da semana."
+            },
+            "objetivos_usuario": [
+                "Prestar mais atenção às pessoas durante refeições e encontros.",
+                "Reduzir distrações causadas pelo smartphone.",
+                "Aproveitar melhor os momentos de interação presencial."
+            ],
+            "divergencias": [
+                "O usuário utiliza o smartphone durante momentos nos quais deseja priorizar interações presenciais.",
+                "A disponibilidade do dispositivo facilita verificações não planejadas."
+            ],
+            "chunks_relevantes": {
+                "CHUNK 08": 3,
+                "CHUNK 04": 2,
+                "CHUNK 03": 2,
+                "CHUNK 06": 1
+            }
+        },
+        {
+            "diagnostico_id": "D015",
+            "diagnostico": "O monitoramento identificou um aumento no tempo de utilização do WhatsApp durante o horário comercial. Entretanto, o usuário informou que utiliza o aplicativo principalmente para comunicação profissional e não relatou insatisfação com esse comportamento.",
+            "evento_detectado": {
+                "aplicativo": "WhatsApp",
+                "ocorrencia": "O usuário acumulou aproximadamente 3 horas de utilização durante o expediente.",
+                "frequencia": "Comportamento observado durante os últimos 5 dias úteis.",
+                "contexto": "Utilização associada às atividades profissionais."
+            },
+            "objetivos_usuario": [
+                "Manter a comunicação profissional.",
+                "Utilizar o smartphone conforme as necessidades do trabalho.",
+                "Não foram identificadas metas pessoais de redução do WhatsApp."
+            ],
+            "divergencias": [],
+            "chunks_relevantes": {
+                "CHUNK 03": 0,
+                "CHUNK 04": 0,
+                "CHUNK 02": 0,
+                "CHUNK 07": 0,
+                "CHUNK 00": 0
+            }
+        }
+    ]
+}
