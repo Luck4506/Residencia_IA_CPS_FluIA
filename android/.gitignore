@@ -1,0 +1,23 @@
+# Estado local do Android Studio e módulos gerados pela IDE.
+/.idea/
+*.iml
+
+# Caches e builds de qualquer módulo.
+.gradle/
+.kotlin/
+build/
+
+# Caminho do SDK específico desta máquina.
+/local.properties
+
+# Artefatos gerados de compilação nativa e pacotes Android.
+.externalNativeBuild/
+.cxx/
+*.apk
+*.aab
+
+# Capturas e exportações locais podem conter dados pessoais.
+/captures/
+/usage-exports/
+
+# O Gradle Wrapper (incluindo seu JAR) e scripts de build são versionados.

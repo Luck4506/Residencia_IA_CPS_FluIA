@@ -1,0 +1,19 @@
+# Metadados locais do macOS, em qualquer pasta.
+.DS_Store
+._*
+
+# Estado local da IDE, inclusive em pastas antigas recriadas pelo Android Studio.
+.idea/
+
+# Configurações privadas; exemplos sem credenciais podem ser versionados.
+.env
+.env.*
+!.env.example
+
+# Chaves e configurações privadas de assinatura Android.
+*.jks
+*.keystore
+keystore.properties
+
+# Local reservado para dados reais de uso, nunca fixtures ou código.
+/dados-locais/
