@@ -66,6 +66,14 @@ O modelo escreve uma sugestão curta de retomada; se falhar, a notificação usa
 
 Chat e terminal podem ser usados no Windows/Linux, mas `--notificar` é exclusivo do macOS. Para ter mensagens no chat e notificações do sistema, mantenha os dois programas abertos. A exibição do banner depende das permissões e do modo Foco do Mac; `notificacao_solicitada` no log confirma o pedido ao sistema, não que o banner ficou visível.
 
+### Encaminhar alertas ao Agente Analista
+
+```bash
+python monitor.py --analista usuario-teste-01
+```
+
+O monitor encaminha os alertas de excesso com o identificador informado e imprime a resposta do Analista em uma linha `resultado_analista`. Veja o [contrato de entrada e os exemplos](CONTRATO_ALERTAS_ANALISTA.md).
+
 ## Arquitetura em um fluxo
 
 `python agente.py` abre a interface de `chat.py`. Ela conversa com o agente e inicia seu próprio monitor em outra thread. O programa `python monitor.py` é uma entrada separada e opcional.

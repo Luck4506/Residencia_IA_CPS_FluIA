@@ -13,6 +13,7 @@ from agente import (
     ARQUIVO_CONFIGURACAO, ARQUIVO_USO,
     avaliar_foco, instante, ler_configuracao, ler_uso,
 )
+from analista import receber_alerta
 
 RESET = "\033[0m"
 # Branco de verdade sobre fundo escuro. A paleta do terminal não troca essa letra por preta.
@@ -72,6 +73,27 @@ def imprimir_evento(evento: dict):
     criar_impressora()(evento)
 
 
+def conectar_analista(usuario_id, emitir):
+    def encaminhar(evento):
+        emitir(evento)
+        if evento['tipo'] == 'alerta':
+            resposta = receber_alerta({
+                'usuario_id': usuario_id,
+                'script_origem': 'monitor_foco',
+                'motivo': evento['motivo'],
+                'horario_alerta': evento['horario'],
+                'periodo_uso': {'inicio': evento['inicio'], 'fim': evento['atualizado_em']},
+                'indicadores': {
+                    'minutos_distraidos': evento['minutos_distraidos'],
+                    'limite_distracao': evento['limite_distracao'],
+                    'minutos_excedidos': evento['minutos_excedidos'],
+                },
+            })
+            print(json.dumps({'tipo': 'resultado_analista', **resposta}, ensure_ascii=False), flush=True)
+
+    return encaminhar
+
+
 class MonitorFoco:
     def __init__(self, configuracao=ARQUIVO_CONFIGURACAO, uso=ARQUIVO_USO,
                  emitir=imprimir_evento):
@@ -129,18 +151,24 @@ def main():
     parser.add_argument("--uso", type=Path, default=ARQUIVO_USO)
     parser.add_argument("--notificar", action="store_true", help="Envia alerta como notificação do macOS")
     parser.add_argument("--sem-ia", action="store_true", help="Usa mensagem fixa na notificação, sem Ollama")
+    parser.add_argument("--analista", metavar="USUARIO_ID", help="Encaminha alertas ao Analista local")
     args = parser.parse_args()
     if args.notificar and sys.platform != "darwin":
         parser.error("As notificações nativas desta etapa exigem macOS.")
     if not math.isfinite(args.intervalo) or args.intervalo <= 0:
         parser.error("O intervalo deve ser um número positivo e finito.")
+    if args.analista is not None and not args.analista.strip():
+        parser.error("Informe um identificador de usuário não vazio em --analista.")
 
     imprimir = criar_impressora(args.formato)
     saida = None
     if args.notificar:
         from notificacoes import SaidaNotificacoes
         saida = SaidaNotificacoes(imprimir, usar_ia=not args.sem_ia)
-    monitor = MonitorFoco(args.configuracao, args.uso, emitir=saida or imprimir)
+    emitir = saida or imprimir
+    if args.analista is not None:
+        emitir = conectar_analista(args.analista, emitir)
+    monitor = MonitorFoco(args.configuracao, args.uso, emitir=emitir)
     print("Monitor ativo. Edite e salve os arquivos. Ctrl+C encerra.", flush=True)
     try:
         while True:
