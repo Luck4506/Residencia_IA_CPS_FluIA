@@ -1,6 +1,7 @@
 """Acompanha arquivos no disco sem precisar de chat ou de conexão com um LLM."""
 
 import argparse
+from collections.abc import Callable
 from datetime import datetime
 import json
 import math
@@ -73,23 +74,41 @@ def imprimir_evento(evento: dict):
     criar_impressora()(evento)
 
 
-def conectar_analista(usuario_id, emitir):
-    def encaminhar(evento):
+def conectar_analista(
+    usuario_id: str,
+    emitir: Callable[[dict], None],
+) -> Callable[[dict], None]:
+    """Mantém a saída do monitor e encaminha os alertas ao Analista local."""
+
+    def encaminhar(evento: dict) -> None:
         emitir(evento)
-        if evento['tipo'] == 'alerta':
-            resposta = receber_alerta({
-                'usuario_id': usuario_id,
-                'script_origem': 'monitor_foco',
-                'motivo': evento['motivo'],
-                'horario_alerta': evento['horario'],
-                'periodo_uso': {'inicio': evento['inicio'], 'fim': evento['atualizado_em']},
-                'indicadores': {
-                    'minutos_distraidos': evento['minutos_distraidos'],
-                    'limite_distracao': evento['limite_distracao'],
-                    'minutos_excedidos': evento['minutos_excedidos'],
-                },
-            })
-            print(json.dumps({'tipo': 'resultado_analista', **resposta}, ensure_ascii=False), flush=True)
+
+        # O monitor registra cada leitura, mas só pede análise quando gera um alerta.
+        if evento['tipo'] != 'alerta':
+            return
+
+        # A medição pode terminar antes do fim planejado da sessão de foco.
+        periodo_medido = {
+            'inicio': evento['inicio'],
+            'fim': evento['atualizado_em'],
+        }
+        indicadores = {
+            'minutos_distraidos': evento['minutos_distraidos'],
+            'limite_distracao': evento['limite_distracao'],
+            'minutos_excedidos': evento['minutos_excedidos'],
+        }
+        alerta = {
+            'usuario_id': usuario_id,
+            'script_origem': 'monitor_foco',
+            'motivo': evento['motivo'],
+            'horario_alerta': evento['horario'],
+            'periodo_uso': periodo_medido,
+            'indicadores': indicadores,
+        }
+
+        resposta = receber_alerta(alerta)
+        resultado = {'tipo': 'resultado_analista', **resposta}
+        print(json.dumps(resultado, ensure_ascii=False), flush=True)
 
     return encaminhar
 
@@ -151,7 +170,11 @@ def main():
     parser.add_argument("--uso", type=Path, default=ARQUIVO_USO)
     parser.add_argument("--notificar", action="store_true", help="Envia alerta como notificação do macOS")
     parser.add_argument("--sem-ia", action="store_true", help="Usa mensagem fixa na notificação, sem Ollama")
-    parser.add_argument("--analista", metavar="USUARIO_ID", help="Encaminha alertas ao Analista local")
+    parser.add_argument(
+        "--analista",
+        metavar="USUARIO_ID",
+        help="Encaminha alertas ao Analista local",
+    )
     args = parser.parse_args()
     if args.notificar and sys.platform != "darwin":
         parser.error("As notificações nativas desta etapa exigem macOS.")
@@ -165,9 +188,11 @@ def main():
     if args.notificar:
         from notificacoes import SaidaNotificacoes
         saida = SaidaNotificacoes(imprimir, usar_ia=not args.sem_ia)
+
     emitir = saida or imprimir
     if args.analista is not None:
         emitir = conectar_analista(args.analista, emitir)
+
     monitor = MonitorFoco(args.configuracao, args.uso, emitir=emitir)
     print("Monitor ativo. Edite e salve os arquivos. Ctrl+C encerra.", flush=True)
     try:
