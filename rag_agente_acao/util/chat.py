@@ -1,4 +1,4 @@
-from util.consulta import ConsultorRAG
+from util.busca_semantica import ConsultorRAG
 import ollama
 
 MODELO_LLM = "qwen2.5:3b"

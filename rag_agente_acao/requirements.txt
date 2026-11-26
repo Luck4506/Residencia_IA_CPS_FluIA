@@ -2,3 +2,4 @@ pymupdf
 sentence-transformers
 chromadb
 ollama
+rank_bm25

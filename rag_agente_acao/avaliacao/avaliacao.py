@@ -1,7 +1,7 @@
 import json
 from datetime import datetime
 from pathlib import Path
-from util.consulta import ConsultorRAG
+from util.busca_semantica import ConsultorRAG
 from .metricas import avaliar_dataset
 
 # CONFIGURAÇÕES DO EXPERIMENTO

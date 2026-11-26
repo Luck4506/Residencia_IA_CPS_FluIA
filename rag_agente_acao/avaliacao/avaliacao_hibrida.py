@@ -7,7 +7,7 @@ from .metricas import avaliar_dataset
 # CONFIGURAÇÕES DO EXPERIMENTO
 TOP_K = 10
 VALORES_K = [2, 3, 4]
-THRESHOLD = 31.9 #None # None = sem threshold
+THRESHOLD = None # None = sem threshold
 
 CAMINHO_DIAGNOSTICOS = Path("avaliacao/diagnosticos_teste.json")
 PASTA_RESULTADOS = Path("avaliacao/resultados")
@@ -48,7 +48,7 @@ for diagnostico in diagnosticos:
 
     # Guardar os chunks junto com suas distâncias
     detalhes_por_id[id_diagnostico] = [
-        f"{id_chunk} - Distância {chunk['distancia']:.4f}"
+        f"{id_chunk} - Score RRF: {chunk['score_hibrido']:.4f}"
         for id_chunk, chunk in zip(ids, resultados)
     ]
 

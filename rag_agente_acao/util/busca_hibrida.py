@@ -1,12 +1,15 @@
 import re
 from rank_bm25 import BM25Okapi
-from  util.consulta import ConsultorRAG
+from  util.busca_semantica import ConsultorRAG
+from  util.busca_lexical import ConsultorLexicalRAG
+
 
 class BuscaHibrida:
 
     def __init__(self):
 
         self.consultor = ConsultorRAG()
+        self.consultorLexical = ConsultorLexicalRAG()
 
         # Recuperar todos os chunks da coleção
         dados = self.consultor.colecao.get(
@@ -16,22 +19,6 @@ class BuscaHibrida:
         self.ids = dados["ids"]
         self.documentos = dados["documents"]
         self.metadados = dados["metadatas"]
-
-        # Criar índice BM25
-        corpus = [
-            self.tokenizar(texto)
-            for texto in self.documentos
-        ]
-
-        self.bm25 = BM25Okapi(corpus)
-
-    # Separar o texto em palavras
-    def tokenizar(self, texto):
-
-        return re.findall(
-            r"\w+",
-            texto.lower()
-        )
 
     # Busca híbrida
     def buscar(self, pergunta, top_k=5):
@@ -53,15 +40,10 @@ class BuscaHibrida:
         )
 
         # 2. Busca lexical (BM25)
-        tokens = self.tokenizar(pergunta)
-
-        pontuacoes = self.bm25.get_scores(tokens)
-
-        indices_bm25 = sorted(
-            range(total),
-            key=lambda i: pontuacoes[i],
-            reverse=True
-        )[:quantidade]
+        indices_bm25 = self.consultorLexical.buscar(
+            pergunta,
+            top_k=quantidade
+        )
 
         # 3. Combinar rankings usando RRF
         ranking = {}
@@ -77,15 +59,14 @@ class BuscaHibrida:
             )
 
         # Resultados BM25
-        for posicao, indice in enumerate(indices_bm25, start=1):
+        for posicao, chunk in enumerate(indices_bm25, start=1):
 
-            id_chunk = self.ids[indice]
+            id_chunk = chunk["id"]
 
             ranking[id_chunk] = (
                 ranking.get(id_chunk, 0)
                 + 1 / (60 + posicao)
             )
-
         # 4. Ordenar pelo score híbrido
         melhores = sorted(
             ranking.items(),
@@ -109,10 +90,6 @@ class BuscaHibrida:
                 "id": id_chunk,
                 "texto": self.documentos[indice],
                 "metadados": self.metadados[indice],
-
-                # Inverso do score para manter a ordenação
-                "distancia": 1 / score,
-
                 "score_hibrido": score
             })
 
