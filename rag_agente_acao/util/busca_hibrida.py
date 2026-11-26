@@ -94,3 +94,47 @@ class BuscaHibrida:
             })
 
         return resultados
+
+# ==========================================
+# INTERFACE DE TERMINAL
+# ==========================================
+
+def main():
+
+    consultor = BuscaHibrida()
+
+    print("\n=== CONSULTA À BASE DE CONHECIMENTO HIBRIDA ===")
+    print("Digite 'sair' para encerrar.\n")
+
+    while True:
+
+        pergunta = input("Pergunta: ").strip()
+
+        if pergunta.lower() in ["sair", "exit", "quit"]:
+            break
+
+        try:
+
+            resultados = consultor.buscar(
+                pergunta,
+                top_k=3
+            )
+
+            print("\n=== CHUNKS RECUPERADOS ===")
+
+            for i, chunk in enumerate(resultados, start=1):
+
+                print(f"\n[{i}] {chunk['id']}")
+                print(f"Score RRF: {chunk['score_hibrido']:.4f}")
+                print("\nTexto:")
+                print(chunk["texto"])
+                print("-" * 60)
+
+        except Exception as erro:
+            print(f"Erro na consulta: {erro}")
+
+    print("\nConsulta encerrada.")
+
+
+if __name__ == "__main__":
+    main()
