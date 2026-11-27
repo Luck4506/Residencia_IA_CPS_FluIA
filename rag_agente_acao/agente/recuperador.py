@@ -4,6 +4,7 @@ Recebe um DiagnosticoEntrada, constrói a consulta e retorna ChunksRecuperados p
 """
 
 import os
+import re
 import sys
 from pathlib import Path
 from typing import List
@@ -89,16 +90,25 @@ class RecuperadorAgente:
     def formatar_para_prompt(self, chunks: List[ChunkRecuperado]) -> str:
         """
         Organiza os chunks recuperados em formato textual claro e legível
-        para serem consumidos no prompt da LLM.
+        para serem consumidos no prompt da LLM, omitindo metadados bibliográficos
+        desnecessários (ex: Fonte e Localização) para economizar tokens.
         """
         if not chunks:
             return "Nenhum conhecimento relevante recuperado da base."
 
         blocos = []
         for i, chunk in enumerate(chunks, start=1):
+            # Remove a seção bibliográfica final para economizar tokens na LLM
+            texto_limpo = re.sub(
+                r"(?i)\*?\*?FONTE E LOCALIZAÇÃO\*?\*?:.*$",
+                "",
+                chunk.texto,
+                flags=re.DOTALL
+            ).strip()
+
             bloco = (
                 f"--- {chunk.id} (Relevância RRF: {chunk.score_hibrido:.4f}) ---\n"
-                f"{chunk.texto.strip()}"
+                f"{texto_limpo}"
             )
             blocos.append(bloco)
 
